@@ -17,7 +17,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.966274348459-u8vrg9bgmm3cgs012j0gh9k237ridrmf"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +30,7 @@
         "backgroundColor": "#FFFFFF"
       }
     },
+    
     "web": {
       "favicon": "./assets/favicon.png"
     }
