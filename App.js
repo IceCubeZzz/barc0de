@@ -9,6 +9,7 @@ const Stack = createStackNavigator();
 import LoginScreen from "./screens/LoginScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import {SafeAreaView} from 'react-native';
+import CameraPreview from "./screens/CameraPreview";
 
 //React Navigation Setup
 import { NavigationContainer } from "@react-navigation/native";

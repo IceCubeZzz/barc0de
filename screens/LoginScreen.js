@@ -7,8 +7,9 @@ const LoginScreen = ({ navigation }) => {
     console.log("LoginScreen.js 6 | logging in");
     try {
       const { type, user } = await Google.logInAsync({
-          // *** REDACTED - IOS/ANDROID CLIENTIDS
-      });
+        iosClientId: `966274348459-okjusgja2f7lgnran8a5nts61q3e0bh0.apps.googleusercontent.com`,
+        androidClientId: `966274348459-s7log3sj7l286o5vcfc5ka1cotbf4hvj.apps.googleusercontent.com`,
+     });
 
       if (type === "success") {
         // Then you can use the Google REST API

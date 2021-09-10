@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import React, {PureComponent} from 'react';import {Camera} from 'expo-camera';
 import { StatusBar } from "expo-status-bar";
+import CameraPreview from "./CameraPreview";
 /*
 export default class ProfileScreen extends PureComponent {  constructor(props) {
   super(props);}
@@ -34,22 +35,21 @@ const ProfileScreen = ({ route, navigation }) => {
   );
 };
 */
+
 const ProfileScreen = ({route, navigation}) => {
   const { user } = route.params;
   console.log("user from google", user);
-  const [startCamera,setStartCamera] = React.useState(false)
-  try {
-    const {status, user} = Camera.requestPermissionsAsync({
-    
-  });
-  if (status === 'granted')
-  {
-    setStartCamera(true);
-  } 
-}catch(error) {
-    Alert.alert('Access denied');
+  const [startCamera,setStartCamera] = React.useState(false);
+  const [previewVisible, setPreviewVisible] = React.useState(false);
+  const [capturedImage, setCapturedImage] = React.useState(null);
+  
+  const __takePicture = async () => {
+    if (!camera) return
+    const photo = await camera.takePictureAsync();
+    console.log(photo);
+    setPreviewVisible(true);
+    setCapturedImage(photo);
   }
-
   const __startCamera = async () => {
     const {status} = await Camera.requestPermissionsAsync()
     if (status === 'granted') {
@@ -63,12 +63,55 @@ const ProfileScreen = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <Text>Welcome, {user.name}!</Text>
+
+            <CameraPreview photo={capturedImage} />
+        
         <Camera
           style={{flex: 1,width:"100%"}}
           ref={(r) => {
             camera = r
           }}
-        ></Camera>
+        >
+          <View
+                style={{
+                  flex: 1,
+                  width: '100%',
+                  backgroundColor: 'transparent',
+                  flexDirection: 'row'
+                }}
+              >
+        <View
+        style={{
+        position: 'absolute',
+        bottom: 0,
+        flexDirection: 'row',
+        flex: 1,
+        width: '100%',
+        padding: 20,
+        justifyContent: 'space-between'
+        }}
+      >
+        <View
+        style={{
+        alignSelf: 'center',
+        flex: 1,
+        alignItems: 'center'
+        }}
+        >
+            <TouchableOpacity
+            onPress={__takePicture}
+            style={{
+            width: 70,
+            height: 70,
+            bottom: 0,
+            borderRadius: 50,
+            backgroundColor: '#fff'
+            }}
+            />
+    </View>
+    </View>
+    </View>
+    </Camera>
       <View
         style={{
           flex: 1,
