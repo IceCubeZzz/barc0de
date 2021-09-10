@@ -73,97 +73,45 @@ const ProfileScreen = ({route, navigation}) => {
       Alert.alert('Access denied');
     }
   }
+  const [hasPermission, setHasPermission] = React.useState(null);
+  const [scanned, setScanned] = React.useState(false);
+
+  React.useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  };
+
+  if (hasPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
   return (
     <View style={styles.container}>
       <Text>Welcome, {user.name}!</Text>
-
-            <CameraPreview photo={capturedImage} />
-        
+      
+      <StatusBar style="auto" />
         <Camera
-          style={{flex: 1,width:"100%"}}
-          ref={(r) => {
-            camera = r
-          }}
-        >
-          <View
-                style={{
-                  flex: 1,
-                  width: '100%',
-                  backgroundColor: 'transparent',
-                  flexDirection: 'row'
-                }}
-              >
-        <View
-        style={{
-        position: 'absolute',
-        bottom: 0,
-        flexDirection: 'row',
-        flex: 1,
-        width: '100%',
-        padding: 20,
-        justifyContent: 'space-between'
-        }}
-      >
-        <View
-        style={{
-        alignSelf: 'center',
-        flex: 1,
-        alignItems: 'center'
-        }}
-        >
-    </View>
-    </View>
-    </View>
-    </Camera>
-    <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? <Text>Loading...</Text> : 
-      ( <View style={{ flex: 1, flexDirection: 'column', justifyContent:  'space-between'}}>
-          <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>{data.title}</Text>
-          <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
-          <FlatList
-            data={data.articles}
-            keyExtractor={({ id }, index) => id}
-            renderItem={({ item }) => (
-              <Text>{item.id + '. ' + item.title}</Text>
-            )}
-          />
-        </View>
-      )}
-    </View>
-      <View
         style={{
           flex: 1,
-          backgroundColor: '#fff',
-          justifyContent: 'center',
-          alignItems: 'center'
+          width: '100%',
+          backgroundColor: 'transparent',
+          flexDirection: 'row'
         }}
-      >
-        <TouchableOpacity
-          onPress={__takePicture}
-          style={{
-            width: 130,
-            borderRadius: 4,
-            backgroundColor: '#14274e',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 40
-          }}
-        >
-          <Text
-            style={{
-              color: '#fff',
-              fontWeight: 'bold',
-              textAlign: 'center'
-            }}
-          >
-            Take picture
-          </Text>
-        </TouchableOpacity>
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={StyleSheet.absoluteFillObject}
+        />
+        {scanned && <React.Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
       </View>
-
-      <StatusBar style="auto" />
-    </View>
   );
           }
 export default ProfileScreen;
