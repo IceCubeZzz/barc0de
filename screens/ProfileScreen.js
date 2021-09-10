@@ -42,7 +42,7 @@ const ProfileScreen = ({route, navigation}) => {
     const {status, user} = Camera.requestPermissionsAsync({
     
   });
-  if (setStartCamera === true)
+  if (status === 'granted')
   {
     setStartCamera(true);
   } 
@@ -52,9 +52,10 @@ const ProfileScreen = ({route, navigation}) => {
 
   const __startCamera = async () => {
     const {status} = await Camera.requestPermissionsAsync()
-    if (setStartCamera === true) {
+    if (status === 'granted') {
       // start the camera
       setStartCamera(true);
+      <View />
     } else {
       Alert.alert('Access denied');
     }
