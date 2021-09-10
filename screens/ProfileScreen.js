@@ -89,10 +89,10 @@ const ProfileScreen = ({route, navigation}) => {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+  
   }
 
   return (
@@ -110,7 +110,6 @@ const ProfileScreen = ({route, navigation}) => {
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
         />
-        {scanned && <React.Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
       </View>
   );
           }
