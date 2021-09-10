@@ -4,11 +4,10 @@ import * as Google from "expo-google-app-auth";
 
 const LoginScreen = ({ navigation }) => {
   const signInAsync = async () => {
-    console.log("LoginScreen.js 6 | loggin in");
+    console.log("LoginScreen.js 6 | logging in");
     try {
       const { type, user } = await Google.logInAsync({
-        iosClientId: `966274348459-u8vrg9bgmm3cgs012j0gh9k237ridrmf.apps.googleusercontent.com`,
-        androidClientId: `966274348459-s7log3sj7l286o5vcfc5ka1cotbf4hvj.apps.googleusercontent.com`,
+          // *** REDACTED - IOS/ANDROID CLIENTIDS
       });
 
       if (type === "success") {
