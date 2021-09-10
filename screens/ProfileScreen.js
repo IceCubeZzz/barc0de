@@ -98,16 +98,6 @@ const ProfileScreen = ({route, navigation}) => {
         alignItems: 'center'
         }}
         >
-            <TouchableOpacity
-            onPress={__takePicture}
-            style={{
-            width: 70,
-            height: 70,
-            bottom: 0,
-            borderRadius: 50,
-            backgroundColor: '#fff'
-            }}
-            />
     </View>
     </View>
     </View>
@@ -121,7 +111,7 @@ const ProfileScreen = ({route, navigation}) => {
         }}
       >
         <TouchableOpacity
-          onPress={__startCamera}
+          onPress={__takePicture}
           style={{
             width: 130,
             borderRadius: 4,
