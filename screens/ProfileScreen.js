@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert, FlatList } from "react-native";
 import React, {PureComponent} from 'react';import {Camera} from 'expo-camera';
 import { StatusBar } from "expo-status-bar";
 import CameraPreview from "./CameraPreview";
@@ -42,7 +42,20 @@ const ProfileScreen = ({route, navigation}) => {
   const [startCamera,setStartCamera] = React.useState(false);
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const [capturedImage, setCapturedImage] = React.useState(null);
-  
+  const [isLoading, setLoading] = React.useState(true);
+  const [data, setData] = React.useState([]);
+  console.log(data);
+
+  React.useEffect(() => {
+    fetch('https://raw.githubusercontent.com/adhithiravi/React-Hooks-Examples/master/testAPI.json')
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, []);
+  // api request working 
+      //https://developer.nrel.gov/api/alt-fuel-stations/v1.json?limit=1&api_key=fERduKb1V9qQB5LyYdVhws9z5rq1KGvC9nJ7Ha86
+    
   const __takePicture = async () => {
     if (!camera) return
     const photo = await camera.takePictureAsync();
@@ -102,6 +115,21 @@ const ProfileScreen = ({route, navigation}) => {
     </View>
     </View>
     </Camera>
+    <View style={{ flex: 1, padding: 24 }}>
+      {isLoading ? <Text>Loading...</Text> : 
+      ( <View style={{ flex: 1, flexDirection: 'column', justifyContent:  'space-between'}}>
+          <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>{data.title}</Text>
+          <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
+          <FlatList
+            data={data.articles}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+              <Text>{item.id + '. ' + item.title}</Text>
+            )}
+          />
+        </View>
+      )}
+    </View>
       <View
         style={{
           flex: 1,
