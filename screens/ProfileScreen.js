@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import React, {PureComponent} from 'react';import {Camera} from 'expo-camera';
 import { StatusBar } from "expo-status-bar";
 /*
@@ -38,6 +38,18 @@ const ProfileScreen = ({route, navigation}) => {
   const { user } = route.params;
   console.log("user from google", user);
   const [startCamera,setStartCamera] = React.useState(false)
+  try {
+    const {status, user} = Camera.requestPermissionsAsync({
+    
+  });
+  if (setStartCamera === true)
+  {
+    setStartCamera(true);
+  } 
+}catch(error) {
+    Alert.alert('Access denied');
+  }
+
   const __startCamera = async () => {
     const {status} = await Camera.requestPermissionsAsync()
     if (setStartCamera === true) {
@@ -50,13 +62,12 @@ const ProfileScreen = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <Text>Welcome, {user.name}!</Text>
-        {startCamera ? (<Camera
+        <Camera
           style={{flex: 1,width:"100%"}}
           ref={(r) => {
             camera = r
           }}
         ></Camera>
-        ): __startCamera}
       <View
         style={{
           flex: 1,
@@ -92,7 +103,7 @@ const ProfileScreen = ({route, navigation}) => {
       <StatusBar style="auto" />
     </View>
   );
-}
+          }
 export default ProfileScreen;
 
 
@@ -103,4 +114,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   }
-})
+});
