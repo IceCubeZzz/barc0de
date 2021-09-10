@@ -40,22 +40,23 @@ const ProfileScreen = ({route, navigation}) => {
   const [startCamera,setStartCamera] = React.useState(false)
   const __startCamera = async () => {
     const {status} = await Camera.requestPermissionsAsync()
-    if (status === 'granted') {
+    if (setStartCamera === true) {
       // start the camera
-      setStartCamera(true)
+      setStartCamera(true);
     } else {
-      Alert.alert('Access denied')
+      Alert.alert('Access denied');
     }
   }
   return (
     <View style={styles.container}>
       <Text>Welcome, {user.name}!</Text>
-        <Camera
+        {startCamera ? (<Camera
           style={{flex: 1,width:"100%"}}
           ref={(r) => {
             camera = r
           }}
         ></Camera>
+        ): __startCamera}
       <View
         style={{
           flex: 1,
