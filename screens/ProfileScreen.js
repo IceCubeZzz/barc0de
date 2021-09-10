@@ -46,8 +46,14 @@ const ProfileScreen = ({route, navigation}) => {
   const [data, setData] = React.useState([]);
   console.log(data);
 
+  
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  };
+
   React.useEffect(() => {
-    fetch('https://raw.githubusercontent.com/adhithiravi/React-Hooks-Examples/master/testAPI.json')
+    fetch('https://api.nal.usda.gov/fdc/v1/foods/search?query=' + data + '&pageSize=2&api_key=fERduKb1V9qQB5LyYdVhws9z5rq1KGvC9nJ7Ha86')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error))
@@ -82,18 +88,6 @@ const ProfileScreen = ({route, navigation}) => {
       setHasPermission(status === 'granted');
     })();
   }, []);
-
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  };
-
-  if (hasPermission === null) {
-    
-  }
-  if (hasPermission === false) {
-  
-  }
 
   return (
     <View style={styles.container}>
