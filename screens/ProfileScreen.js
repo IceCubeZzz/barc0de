@@ -38,7 +38,7 @@ const ProfileScreen = ({ route, navigation }) => {
 
 const ProfileScreen = ({route, navigation}) => {
   const { user } = route.params;
-  console.log("user from google", user);
+
   const [startCamera,setStartCamera] = React.useState(false);
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const [capturedImage, setCapturedImage] = React.useState(null);
@@ -47,10 +47,11 @@ const ProfileScreen = ({route, navigation}) => {
   console.log(data);
 
   React.useEffect(() => {
-    fetch('https://raw.githubusercontent.com/adhithiravi/React-Hooks-Examples/master/testAPI.json')
+    fetch('https://api.nal.usda.gov/fdc/v1/foods/search?query=' + data + '&pageSize=2&api_key=fERduKb1V9qQB5LyYdVhws9z5rq1KGvC9nJ7Ha86')
       .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error))
+      // retrieve calorie data
+      .then((json) => setData(json['foods'][0]['foodNutrients'][3]['value']))
+      .catch((error) => console.error(error)) 
       .finally(() => setLoading(false));
   }, []);
   // api request working 
