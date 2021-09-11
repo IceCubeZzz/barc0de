@@ -5,11 +5,13 @@ import {
   TouchableOpacity,
   Alert,
   FlatList,
+  Button,
 } from "react-native";
 import React, { PureComponent } from "react";
 import { Camera } from "expo-camera";
 import { StatusBar } from "expo-status-bar";
 import CameraPreview from "./CameraPreview";
+import { BUILDER_KEYS } from "@babel/types";
 /*
 export default class ProfileScreen extends PureComponent {  constructor(props) {
   super(props);}
@@ -53,6 +55,7 @@ const ProfileScreen = ({ route, navigation }) => {
   const [isLoading, setLoading] = React.useState(true);
   const [nutritionalData, setNutritionalData] = React.useState([]);
   const [calorieData, setCalorieData] = React.useState(0);
+  const [servings, setServings] = React.useState(0);
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
@@ -111,7 +114,6 @@ const ProfileScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Welcome, {user.name}!</Text>
-
       <StatusBar style="auto" />
       <Camera
         style={{
@@ -123,7 +125,7 @@ const ProfileScreen = ({ route, navigation }) => {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      <View style={{ flex: 1, padding: 24 }}>
+      <View style={{ flex: 6, padding: 24 }}>
         {isLoading ? (
           <Text>Loading...</Text>
         ) : (
@@ -131,40 +133,60 @@ const ProfileScreen = ({ route, navigation }) => {
             style={{
               flex: 1,
               flexDirection: "column",
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
             }}
           >
             <Text style={{ fontSize: 18, color: "green", textAlign: "center" }}>
               {nutritionalData.title}
             </Text>
             <Text
-              style={{
-                fontSize: 14,
-                color: "green",
-                textAlign: "center",
-                paddingBottom: 10,
-              }}
+              style={[
+                styles.defaultWhiteText,
+                { textAlign: "center", paddingBottom: 16 },
+              ]}
             >
-              Articles:
+              Add Serving:
             </Text>
-            <FlatList
+            <Text style={styles.defaultWhiteText}>
+              {"Calories per serving: " + calorieData}
+            </Text>
+            <Text style={styles.defaultWhiteText}>
+              {"Calories for " + servings + ": " + calorieData * servings}
+            </Text>
+            {/* <FlatList
               nutritionalData={nutritionalData.articles}
               keyExtractor={({ id }, index) => id}
               renderItem={({ item }) => (
                 <Text>{item.id + ". " + item.title}</Text>
               )}
-            />
+            /> */}
           </View>
         )}
       </View>
-    </View>
 
-    // create serving selection buttons
-    <View>
-      
+      <View style={styles.row}>
+        <Button
+          style={styles.defaultButton}
+          title=" - "
+          onPress={() => {
+            setServings(servings === 0 ? servings : servings - 1);
+          }}
+        />
+
+        <Text style={styles.defaultText}> {"Servings: " + servings} </Text>
+
+        <Button
+          styles={styles.defaultButton}
+          title=" + "
+          onPress={() => {
+            setServings(servings + 1);
+          }}
+        />
+      </View>
     </View>
   );
 };
+
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
@@ -172,6 +194,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
+  },
+  row: {
+    backgroundColor: "#fff",
+    alignSelf: "stretch",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  defaultButton: {
+    flex: 3,
+    alignSelf: "stretch",
+    width: "25%",
+  },
+  defaultText: {
+    fontSize: 26,
+    color: "blue",
+    alignSelf: "center",
+  },
+  defaultWhiteText: {
+    fontSize: 22,
+    color: "white",
+    alignSelf: "center",
   },
 });
