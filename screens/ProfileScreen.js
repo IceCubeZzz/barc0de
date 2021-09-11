@@ -59,6 +59,11 @@ const ProfileScreen = ({ route, navigation }) => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    if(data.length === 13)
+    {
+      data = data.substring(1);
+    }
+
     alert(
       `Bar code with type ${type} and nutritionalData ${data} has been scanned!`
     );
@@ -148,10 +153,10 @@ const ProfileScreen = ({ route, navigation }) => {
               Add Serving:
             </Text>
             <Text style={styles.defaultWhiteText}>
-              {"Calories per serving: " + calorieData}
+              {"Calories per 100 gram serving: " + calorieData}
             </Text>
             <Text style={styles.defaultWhiteText}>
-              {"Calories for " + servings + ": " + calorieData * servings}
+              {"Calories for " + servings + " serving(s): " + (calorieData * servings)}
             </Text>
             {/* <FlatList
               nutritionalData={nutritionalData.articles}
