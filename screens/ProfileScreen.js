@@ -44,22 +44,25 @@ const ProfileScreen = ({route, navigation}) => {
   const [capturedImage, setCapturedImage] = React.useState(null);
   const [isLoading, setLoading] = React.useState(true);
   const [data, setData] = React.useState([]);
-  console.log(data);
-
   
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  };
 
-  React.useEffect(() => {
     fetch('https://api.nal.usda.gov/fdc/v1/foods/search?query=' + data + '&pageSize=2&api_key=fERduKb1V9qQB5LyYdVhws9z5rq1KGvC9nJ7Ha86')
-      .then((response) => response.json())
-      // retrieve calorie data
-      .then((json) => setData(json['foods'][0]['foodNutrients'][3]['value']))
-      .catch((error) => console.error(error)) 
-      .finally(() => setLoading(false));
-  }, []);
+    .then((response) => response.json())
+    // retrieve nutritional data and attempt to set calorie data
+    .then((json) => {
+      try {
+        setData(json['foods'][0]['foodNutrients'][3]['value']);
+      } catch (error) {
+        console.error(error);
+      }
+      console.log(json)
+    })
+    .catch((error) => console.error(error)) 
+    .finally(() => setLoading(false));
+  };
   // api request working 
       //https://developer.nrel.gov/api/alt-fuel-stations/v1.json?limit=1&api_key=fERduKb1V9qQB5LyYdVhws9z5rq1KGvC9nJ7Ha86
     
