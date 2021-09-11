@@ -57,11 +57,27 @@ const ProfileScreen = ({ route, navigation }) => {
   const [calorieData, setCalorieData] = React.useState(0);
   const [servings, setServings] = React.useState(0);
 
+  const addServing = () => {};
+
+  const cancelAddServing = () => {
+    console.log("add serving canceled");
+    setScanned(false);
+  };
+
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(
-      `Bar code with type ${type} and nutritionalData ${data} has been scanned!`
-    );
+    Alert.alert("Bar code scanned", `Type: ${type} \nFDC ID: ${data}`, [
+      {
+        text: "Cancel",
+        onPress: cancelAddServing,
+        style: "cancel",
+      },
+      {
+        text: "Add Servings",
+        onPress: addServing,
+        style: "accept",
+      },
+    ]);
 
     fetch(
       "https://api.nal.usda.gov/fdc/v1/foods/search?query=" +
@@ -151,7 +167,10 @@ const ProfileScreen = ({ route, navigation }) => {
               {"Calories per serving: " + calorieData}
             </Text>
             <Text style={styles.defaultWhiteText}>
-              {"Calories for " + servings + ": " + calorieData * servings}
+              {"Calories for " +
+                servings +
+                " servings: " +
+                calorieData * servings}
             </Text>
             {/* <FlatList
               nutritionalData={nutritionalData.articles}
