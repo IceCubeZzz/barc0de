@@ -54,30 +54,37 @@ const ProfileScreen = ({ route, navigation }) => {
   const [capturedImage, setCapturedImage] = React.useState(null);
   const [isLoading, setLoading] = React.useState(true);
   const [nutritionalData, setNutritionalData] = React.useState([]);
+  const [foodDescription, setFoodDescription] = React.useState(null);
   const [calorieData, setCalorieData] = React.useState(0);
   const [servings, setServings] = React.useState(0);
 
   const addServing = () => {};
 
   const cancelAddServing = () => {
-    console.log("add serving canceled");
     setScanned(false);
   };
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    Alert.alert("Bar code scanned", `Type: ${type} \nFDC ID: ${data}`, [
-      {
-        text: "Cancel",
-        onPress: cancelAddServing,
-        style: "cancel",
-      },
-      {
-        text: "Add Servings",
-        onPress: addServing,
-        style: "accept",
-      },
-    ]);
+    Alert.alert(
+      "Bar code scanned",
+      `Type: ${type} 
+        \nFDC ID: ${data} 
+        \nServings: ${servings} 
+        \nCalories: ${servings * calorieData}`,
+      [
+        {
+          text: "Cancel",
+          onPress: cancelAddServing,
+          style: "cancel",
+        },
+        {
+          text: "Add Servings",
+          onPress: addServing,
+          style: "accept",
+        },
+      ]
+    );
 
     fetch(
       "https://api.nal.usda.gov/fdc/v1/foods/search?query=" +
@@ -90,6 +97,7 @@ const ProfileScreen = ({ route, navigation }) => {
         setNutritionalData(json);
         try {
           setCalorieData(json["foods"][0]["foodNutrients"][3]["value"]);
+          setFoodDescription(json["foods"][0]["lowercaseDescription"]);
         } catch (error) {
           console.error(error);
         }
