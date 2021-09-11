@@ -43,25 +43,27 @@ const ProfileScreen = ({route, navigation}) => {
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const [capturedImage, setCapturedImage] = React.useState(null);
   const [isLoading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState([]);
+  const [nutritionalData, setNutritionalData] = React.useState([]);
+  const [calorieData, setCalorieData] = React.useState(0);
   
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    alert(`Bar code with type ${type} and nutritionalData ${data} has been scanned!`);
 
     fetch('https://api.nal.usda.gov/fdc/v1/foods/search?query=' + data + '&pageSize=2&api_key=fERduKb1V9qQB5LyYdVhws9z5rq1KGvC9nJ7Ha86')
     .then((response) => response.json())
     // retrieve nutritional data and attempt to set calorie data
     .then((json) => {
+      setNutritionalData(json);
       try {
-        setData(json['foods'][0]['foodNutrients'][3]['value']);
+        setCalorieData(json['foods'][0]['foodNutrients'][3]['value']);
       } catch (error) {
         console.error(error);
       }
-      console.log(json)
     })
     .catch((error) => console.error(error)) 
     .finally(() => setLoading(false));
+    console.log(calorieData);
   };
   // api request working 
       //https://developer.nrel.gov/api/alt-fuel-stations/v1.json?limit=1&api_key=fERduKb1V9qQB5LyYdVhws9z5rq1KGvC9nJ7Ha86
@@ -111,10 +113,10 @@ const ProfileScreen = ({route, navigation}) => {
         <View style={{ flex: 1, padding: 24 }}>
       {isLoading ? <Text>Loading...</Text> : 
       ( <View style={{ flex: 1, flexDirection: 'column', justifyContent:  'space-between'}}>
-          <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>{data.title}</Text>
+          <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>{nutritionalData.title}</Text>
           <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
           <FlatList
-            data={data.articles}
+            nutritionalData={nutritionalData.articles}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
               <Text>{item.id + '. ' + item.title}</Text>
