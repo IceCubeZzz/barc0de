@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
 import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 // Screens
 import LoginScreen from "./screens/LoginScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import {SafeAreaView} from 'react-native';
+import { SafeAreaView } from "react-native";
 import CameraPreview from "./screens/CameraPreview";
 
 //React Navigation Setup

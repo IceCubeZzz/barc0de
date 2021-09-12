@@ -54,18 +54,41 @@ const ProfileScreen = ({ route, navigation }) => {
   const [capturedImage, setCapturedImage] = React.useState(null);
   const [isLoading, setLoading] = React.useState(true);
   const [nutritionalData, setNutritionalData] = React.useState([]);
+  const [foodDescription, setFoodDescription] = React.useState(null);
   const [calorieData, setCalorieData] = React.useState(0);
+  const [calorieUnit, setCalorieUnit] = React.useState(null);
   const [servings, setServings] = React.useState(0);
+
+  const addServing = () => {};
+
+  const cancelAddServing = () => {
+    setScanned(false);
+  };
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    if(data.length === 13)
-    {
+    if (data.length === 13) {
       data = data.substring(1);
     }
 
-    alert(
-      `Bar code with type ${type} and nutritionalData ${data} has been scanned!`
+    Alert.alert(
+      "Bar code scanned",
+      `Type: ${type} 
+        \nFDC ID: ${data} 
+        \nServings: ${servings} 
+        \nCalories: ${servings * calorieData}`,
+      [
+        {
+          text: "Cancel",
+          onPress: cancelAddServing,
+          style: "cancel",
+        },
+        {
+          text: "Add Servings",
+          onPress: addServing,
+          style: "accept",
+        },
+      ]
     );
 
     fetch(
@@ -78,7 +101,9 @@ const ProfileScreen = ({ route, navigation }) => {
       .then((json) => {
         setNutritionalData(json);
         try {
+          setCalorieUnit(json["foods"][0]["foodNutrients"][3]["unitName"]);
           setCalorieData(json["foods"][0]["foodNutrients"][3]["value"]);
+          setFoodDescription(json["foods"][0]["lowercaseDescription"]);
         } catch (error) {
           console.error(error);
         }
@@ -156,7 +181,10 @@ const ProfileScreen = ({ route, navigation }) => {
               {"Calories per 100 gram serving: " + calorieData}
             </Text>
             <Text style={styles.defaultWhiteText}>
-              {"Calories for " + servings + " serving(s): " + (calorieData * servings)}
+              {"Calories for " +
+                servings +
+                " serving(s): " +
+                calorieData * servings}
             </Text>
             {/* <FlatList
               nutritionalData={nutritionalData.articles}
