@@ -56,6 +56,7 @@ const ProfileScreen = ({ route, navigation }) => {
   const [nutritionalData, setNutritionalData] = React.useState([]);
   const [foodDescription, setFoodDescription] = React.useState(null);
   const [calorieData, setCalorieData] = React.useState(0);
+  const [calorieUnit, setCalorieUnit] = React.useState(null);
   const [servings, setServings] = React.useState(0);
 
   const addServing = () => {};
@@ -66,6 +67,10 @@ const ProfileScreen = ({ route, navigation }) => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    if (data.length === 13) {
+      data = data.substring(1);
+    }
+
     Alert.alert(
       "Bar code scanned",
       `Type: ${type} 
@@ -96,6 +101,7 @@ const ProfileScreen = ({ route, navigation }) => {
       .then((json) => {
         setNutritionalData(json);
         try {
+          setCalorieUnit(json["foods"][0]["foodNutrients"][3]["unitName"]);
           setCalorieData(json["foods"][0]["foodNutrients"][3]["value"]);
           setFoodDescription(json["foods"][0]["lowercaseDescription"]);
         } catch (error) {
@@ -172,12 +178,12 @@ const ProfileScreen = ({ route, navigation }) => {
               Add Serving:
             </Text>
             <Text style={styles.defaultWhiteText}>
-              {"Calories per serving: " + calorieData}
+              {"Calories per 100 gram serving: " + calorieData}
             </Text>
             <Text style={styles.defaultWhiteText}>
               {"Calories for " +
                 servings +
-                " servings: " +
+                " serving(s): " +
                 calorieData * servings}
             </Text>
             {/* <FlatList
