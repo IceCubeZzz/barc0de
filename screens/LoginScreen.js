@@ -14,9 +14,9 @@ const LoginScreen = ({ navigation }) => {
       if (type === "success") {
         // Then you can use the Google REST API
         console.log("LoginScreen.js 17 | success, navigating to profile");
-        navigation.navigate("Addrecipe", {
+        navigation.navigate("AddRecipe", {
           user: user,
-          newrecipe: true,
+          newRecipe: true,
           recipeAddition: null,
         });
       }

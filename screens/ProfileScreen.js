@@ -48,7 +48,7 @@ const ProfileScreen = ({ route, navigation }) => {
 */
 
 const ProfileScreen = ({ route, navigation }) => {
-  const { user } = route.params;
+  const { user, previousScreen } = route.params;
 
   const [startCamera, setStartCamera] = React.useState(false);
   const [previewVisible, setPreviewVisible] = React.useState(false);
@@ -86,15 +86,22 @@ const ProfileScreen = ({ route, navigation }) => {
   }, [foodDescription]);
 
   const addServing = () => {
-    navigation.navigate("Addrecipe", {
-      user: user,
-      newrecipe: false,
-      recipeAddition: {
-        ingredient: foodDescription,
-        servingAmount: servings,
-        calories: calorieData,
-      },
-    });
+    if (previousScreen === "AddRecipe") {
+      navigation.navigate("AddRecipe", {
+        user: user,
+        newRecipe: false,
+        recipeAddition: {
+          ingredient: foodDescription,
+          servingAmount: servings,
+          calories: calorieData,
+        },
+      });
+    } else if (previousScreen === "AddLog") {
+      navigation.navigate("AddLog", {
+        user: user,
+        // todo: setup log
+      });
+    }
   };
 
   const cancelAddServing = () => {

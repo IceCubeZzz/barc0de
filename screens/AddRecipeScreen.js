@@ -10,11 +10,11 @@ import {
   Button,
 } from "react-native";
 
-const AddrecipeScreen = ({ route, navigation }) => {
-  const { user, newrecipe, recipeAddition } = route.params;
+const AddRecipeScreen = ({ route, navigation }) => {
+  const { user, newRecipe, recipeAddition } = route.params;
 
   const [ingredients, setIngredients] = React.useState(
-    newrecipe ? [] : [recipeAddition].concat(ingredients)
+    newRecipe ? [] : [recipeAddition].concat(ingredients)
   );
 
   if (
@@ -60,7 +60,8 @@ const AddrecipeScreen = ({ route, navigation }) => {
         onPress={() => {
           // navigate to barcode scanner screen
           navigation.navigate("Profile", {
-            user,
+            user: user,
+            previousScreen: "AddRecipe",
           });
         }}
       />
@@ -68,7 +69,7 @@ const AddrecipeScreen = ({ route, navigation }) => {
   );
 };
 
-export default AddrecipeScreen;
+export default AddRecipeScreen;
 
 const styles = StyleSheet.create({
   recipeList: {

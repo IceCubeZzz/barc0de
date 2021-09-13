@@ -9,7 +9,7 @@ import {
   Button,
 } from "react-native";
 
-const recipeScreen = ({ route, navigation }) => {
+const RecipeScreen = ({ route, navigation }) => {
   const { user } = route.params;
 
   //todo: retrieve recipes from firebase and store in 'x'
@@ -52,9 +52,9 @@ const recipeScreen = ({ route, navigation }) => {
         title="Add New Recipe"
         onPress={() => {
           // navigate to add recipe screen
-          navigation.navigate("Addrecipe", {
+          navigation.navigate("AddRecipe", {
             user,
-            newrecipe: true,
+            newRecipe: true,
             recipeAddition: null,
           });
         }}
@@ -64,9 +64,9 @@ const recipeScreen = ({ route, navigation }) => {
         title="Add Food Log"
         onPress={() => {
           // navigate to add recipe screen
-          navigation.navigate("Addrecipe", {
+          navigation.navigate("AddRecipe", {
             user,
-            newrecipe: true,
+            newRecipe: true,
             recipeAddition: null,
           });
         }}
@@ -94,7 +94,7 @@ const recipe = ({ ingredients, servings, totalCalories }) => {
   );
 };
 
-export default recipeScreen;
+export default RecipeScreen;
 
 const styles = StyleSheet.create({
   recipesList: {
