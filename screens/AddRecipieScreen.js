@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   TouchableOpacity,
   Alert,
   FlatList,
@@ -13,18 +14,20 @@ const AddRecipieScreen = ({ route, navigation }) => {
   const { user, newRecipie, recipieAddition } = route.params;
 
   const [ingredients, setIngredients] = React.useState(
-    newRecipie ? [] : [{ ingredients }, recipieAddition]
+    newRecipie ? [] : [recipieAddition].concat(ingredients)
   );
 
   if (
     recipieAddition &&
+    Object.keys(recipieAddition).length > 0 &&
     (ingredients.length == 0 ||
       (ingredients.length > 0 &&
         ingredients[ingredients.length - 1]["ingredient"] !==
           recipieAddition["ingredient"]))
   ) {
-    setIngredients([{ ingredients }, recipieAddition]);
+    setIngredients([recipieAddition].concat(ingredients));
   }
+  console.log(ingredients);
 
   var ingredientComponentsArr = [];
   for (let i = 0; i < ingredients.length; i++) {
@@ -37,14 +40,14 @@ const AddRecipieScreen = ({ route, navigation }) => {
           {ingredients[i]["servingAmount"]}
         </Text>
         <Text style={styles.recipieDefaultText}>
-          {ingredients[i]["calories"]}
+          {ingredients[i]["calories"] + " Kcals"}
         </Text>
       </View>
     );
   }
 
   return (
-    <View styles={styles.recipieList}>
+    <ScrollView styles={styles.recipieList}>
       <View style={styles.recipieContainer}>
         <Text style={styles.recipieHeaderText}>Ingredients:</Text>
         <Text style={styles.recipieHeaderText}>Servings:</Text>
@@ -61,7 +64,7 @@ const AddRecipieScreen = ({ route, navigation }) => {
           });
         }}
       />
-    </View>
+    </ScrollView>
   );
 };
 
