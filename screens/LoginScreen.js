@@ -9,12 +9,16 @@ const LoginScreen = ({ navigation }) => {
       const { type, user } = await Google.logInAsync({
         iosClientId: `966274348459-okjusgja2f7lgnran8a5nts61q3e0bh0.apps.googleusercontent.com`,
         androidClientId: `966274348459-s7log3sj7l286o5vcfc5ka1cotbf4hvj.apps.googleusercontent.com`,
-     });
+      });
 
       if (type === "success") {
         // Then you can use the Google REST API
         console.log("LoginScreen.js 17 | success, navigating to profile");
-        navigation.navigate("Profile", { user });
+        navigation.navigate("AddRecipie", {
+          user: user,
+          newRecipie: true,
+          recipieAddition: null,
+        });
       }
     } catch (error) {
       console.log("LoginScreen.js 19 | error with login", error);
