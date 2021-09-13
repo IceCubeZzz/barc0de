@@ -1,31 +1,43 @@
 import React from "react";
-import { StyleSheet, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  FlatList,
+  Button,
+} from "react-native";
 
 const AddRecipieScreen = ({ route, navigation }) => {
   const { user, newRecipie, recipieAddition } = route.params;
 
   const [ingredients, setIngredients] = React.useState(
-    newRecipie ? [] : [{ ingredients, recipieAddition }]
+    newRecipie ? [] : [{ ingredients }, recipieAddition]
   );
 
-  /*if (newRecipie === true) {
-    setIngredients([]);
-  } else {
+  if (
+    recipieAddition &&
+    (ingredients.length == 0 ||
+      (ingredients.length > 0 &&
+        ingredients[ingredients.length - 1]["ingredient"] !==
+          recipieAddition["ingredient"]))
+  ) {
     setIngredients([{ ingredients }, recipieAddition]);
-  }*/
+  }
 
   var ingredientComponentsArr = [];
   for (let i = 0; i < ingredients.length; i++) {
     ingredientComponentsArr.push(
-      <View>
-        <Text styles={styles.recipieDefaultText}>
-          {recipieData[i]["ingredient"]}
+      <View style={styles.recipieContainer} key={i}>
+        <Text style={styles.recipieDefaultText}>
+          {ingredients[i]["ingredient"]}
         </Text>
-        <Text styles={styles.recipieDefaultText}>
-          {recipieData[i]["servings"]}
+        <Text style={styles.recipieDefaultText}>
+          {ingredients[i]["servingAmount"]}
         </Text>
-        <Text styles={styles.recipieDefaultText}>
-          {recipieData[i]["calories"]}
+        <Text style={styles.recipieDefaultText}>
+          {ingredients[i]["calories"]}
         </Text>
       </View>
     );
@@ -33,6 +45,11 @@ const AddRecipieScreen = ({ route, navigation }) => {
 
   return (
     <View styles={styles.recipieList}>
+      <View style={styles.recipieContainer}>
+        <Text style={styles.recipieHeaderText}>Ingredients:</Text>
+        <Text style={styles.recipieHeaderText}>Servings:</Text>
+        <Text style={styles.recipieHeaderText}>Calories:</Text>
+      </View>
       {ingredientComponentsArr}
       <Button
         styles={styles.defaultButton}
@@ -58,13 +75,18 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
   },
   recipieContainer: {
-    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  recipieHeaderText: {
+    flex: 1,
+    fontSize: 18,
+    color: "black",
   },
   recipieDefaultText: {
     flex: 1,
-    fontSize: 20,
+    fontSize: 14,
     color: "blue",
   },
   defaultButton: {

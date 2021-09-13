@@ -7,11 +7,12 @@ import {
   FlatList,
   Button,
 } from "react-native";
-import React, { PureComponent } from "react";
+import React, { PureComponent, useEffect } from "react";
 import { Camera } from "expo-camera";
 import { StatusBar } from "expo-status-bar";
 import CameraPreview from "./CameraPreview";
 import { BUILDER_KEYS } from "@babel/types";
+import react from "react";
 /*
 export default class ProfileScreen extends PureComponent {  constructor(props) {
   super(props);}
@@ -54,12 +55,47 @@ const ProfileScreen = ({ route, navigation }) => {
   const [capturedImage, setCapturedImage] = React.useState(null);
   const [isLoading, setLoading] = React.useState(true);
   const [nutritionalData, setNutritionalData] = React.useState([]);
-  const [foodDescription, setFoodDescription] = React.useState(null);
+  const [foodDescription, setFoodDescription] = React.useState("");
   const [calorieData, setCalorieData] = React.useState(0);
   const [calorieUnit, setCalorieUnit] = React.useState(null);
   const [servings, setServings] = React.useState(0);
+  const [ID, setID] = React.useState(0);
 
-  const addServing = () => {};
+  useEffect(() => {
+    if (foodDescription) {
+      Alert.alert(
+        "Bar code scanned",
+        `Food description: ${foodDescription} 
+            \nFDC ID: ${ID} 
+            \nServings: ${servings} 
+            \nCalories: ${servings * calorieData}`,
+        [
+          {
+            text: "Cancel",
+            onPress: cancelAddServing,
+            style: "cancel",
+          },
+          {
+            text: "Add Servings",
+            onPress: addServing,
+            style: "accept",
+          },
+        ]
+      );
+    }
+  }, [foodDescription]);
+
+  const addServing = () => {
+    navigation.navigate("AddRecipie", {
+      user: user,
+      newRecipie: false,
+      recipieAddition: {
+        ingredient: foodDescription,
+        servingAmount: servings,
+        calories: calorieData,
+      },
+    });
+  };
 
   const cancelAddServing = () => {
     setScanned(false);
@@ -71,26 +107,7 @@ const ProfileScreen = ({ route, navigation }) => {
       data = data.substring(1);
     }
 
-    Alert.alert(
-      "Bar code scanned",
-      `Type: ${type} 
-        \nFDC ID: ${data} 
-        \nServings: ${servings} 
-        \nCalories: ${servings * calorieData}`,
-      [
-        {
-          text: "Cancel",
-          onPress: cancelAddServing,
-          style: "cancel",
-        },
-        {
-          text: "Add Servings",
-          onPress: addServing,
-          style: "accept",
-        },
-      ]
-    );
-
+    setID(data);
     fetch(
       "https://api.nal.usda.gov/fdc/v1/foods/search?query=" +
         data +

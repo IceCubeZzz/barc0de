@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  FlatList,
+  Button,
+} from "react-native";
 
 const RecipieScreen = ({ route, navigation }) => {
   const { user } = route.params;
@@ -26,7 +34,7 @@ const RecipieScreen = ({ route, navigation }) => {
     recipies.push(
       Recipie(
         recipieData[i]["ingredients"],
-        recipieData[i]["servings"],
+        recipieData[i]["servingAmount"],
         recipieData[i]["calories"]
       )
     );
@@ -34,13 +42,13 @@ const RecipieScreen = ({ route, navigation }) => {
 
   return (
     <View
-      styles={{
+      style={{
         flexDirection: "column",
       }}
     >
-      <View styles={styles.recipiesList}>{recipies}</View>
+      <View style={styles.recipiesList}>{recipies}</View>
       <Button
-        styles={styles.defaultButton}
+        style={styles.defaultButton}
         title="Add new recipie"
         onPress={() => {
           // navigate to add recipie screen
@@ -60,15 +68,15 @@ const Recipie = ({ ingredients, servings, totalCalories }) => {
 
   for (let i = 0; i < ingredients.length; i++) {
     recipieRow.push(
-      <View styles={styles.recipieContainer}>
-        <Text styles={styles.recipieDefaultText}>{ingredients[i]}</Text>
-        <Text styles={styles.recipieDefaultText}>{servings[i]}</Text>
-        <Text styles={styles.recipieDefaultText}>{totalCalories[i]}</Text>
+      <View style={styles.recipieContainer}>
+        <Text style={styles.recipieDefaultText}>{ingredients[i]}</Text>
+        <Text style={styles.recipieDefaultText}>{servings[i]}</Text>
+        <Text style={styles.recipieDefaultText}>{totalCalories[i]}</Text>
       </View>
     );
   }
   return (
-    <View key={i} styles={styles.recipieList}>
+    <View key={i} style={styles.recipieList}>
       {recipieRow}
     </View>
   );
@@ -90,7 +98,6 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
   },
   recipieContainer: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
   },
