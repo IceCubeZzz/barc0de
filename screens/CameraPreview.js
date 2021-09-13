@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 const CameraPreview = ({ photo }) => {
-  console.log("sdsfds", photo);
+  console.log(photo);
   return (
     <View
       style={{
