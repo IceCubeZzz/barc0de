@@ -8,8 +8,8 @@ const Stack = createStackNavigator();
 // Screens
 import LoginScreen from "./screens/LoginScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import RecipieScreen from "./screens/RecipieScreen";
-import AddRecipieScreen from "./screens/AddRecipieScreen";
+import recipeScreen from "./screens/recipeScreen";
+import AddrecipeScreen from "./screens/AddrecipeScreen";
 import { SafeAreaView } from "react-native";
 import CameraPreview from "./screens/CameraPreview";
 
@@ -22,7 +22,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="AddRecipie" component={AddRecipieScreen} />
+        <Stack.Screen name="Addrecipe" component={AddrecipeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

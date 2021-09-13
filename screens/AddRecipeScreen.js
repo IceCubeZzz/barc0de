@@ -10,36 +10,36 @@ import {
   Button,
 } from "react-native";
 
-const AddRecipieScreen = ({ route, navigation }) => {
-  const { user, newRecipie, recipieAddition } = route.params;
+const AddrecipeScreen = ({ route, navigation }) => {
+  const { user, newrecipe, recipeAddition } = route.params;
 
   const [ingredients, setIngredients] = React.useState(
-    newRecipie ? [] : [recipieAddition].concat(ingredients)
+    newrecipe ? [] : [recipeAddition].concat(ingredients)
   );
 
   if (
-    recipieAddition &&
-    Object.keys(recipieAddition).length > 0 &&
+    recipeAddition &&
+    Object.keys(recipeAddition).length > 0 &&
     (ingredients.length == 0 ||
       (ingredients.length > 0 &&
         ingredients[ingredients.length - 1]["ingredient"] !==
-          recipieAddition["ingredient"]))
+          recipeAddition["ingredient"]))
   ) {
-    setIngredients([recipieAddition].concat(ingredients));
+    setIngredients([recipeAddition].concat(ingredients));
   }
   console.log(ingredients);
 
   var ingredientComponentsArr = [];
   for (let i = 0; i < ingredients.length; i++) {
     ingredientComponentsArr.push(
-      <View style={styles.recipieContainer} key={i}>
-        <Text style={styles.recipieDefaultText}>
+      <View style={styles.recipeContainer} key={i}>
+        <Text style={styles.recipeDefaultText}>
           {ingredients[i]["ingredient"]}
         </Text>
-        <Text style={styles.recipieDefaultText}>
+        <Text style={styles.recipeDefaultText}>
           {ingredients[i]["servingAmount"]}
         </Text>
-        <Text style={styles.recipieDefaultText}>
+        <Text style={styles.recipeDefaultText}>
           {ingredients[i]["calories"] + " Kcals"}
         </Text>
       </View>
@@ -47,11 +47,11 @@ const AddRecipieScreen = ({ route, navigation }) => {
   }
 
   return (
-    <ScrollView styles={styles.recipieList}>
-      <View style={styles.recipieContainer}>
-        <Text style={styles.recipieHeaderText}>Ingredients:</Text>
-        <Text style={styles.recipieHeaderText}>Servings:</Text>
-        <Text style={styles.recipieHeaderText}>Calories:</Text>
+    <ScrollView styles={styles.recipeList}>
+      <View style={styles.recipeContainer}>
+        <Text style={styles.recipeHeaderText}>Ingredients:</Text>
+        <Text style={styles.recipeHeaderText}>Servings:</Text>
+        <Text style={styles.recipeHeaderText}>Calories:</Text>
       </View>
       {ingredientComponentsArr}
       <Button
@@ -68,26 +68,26 @@ const AddRecipieScreen = ({ route, navigation }) => {
   );
 };
 
-export default AddRecipieScreen;
+export default AddrecipeScreen;
 
 const styles = StyleSheet.create({
-  recipieList: {
+  recipeList: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "stretch",
   },
-  recipieContainer: {
+  recipeContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
-  recipieHeaderText: {
+  recipeHeaderText: {
     flex: 1,
     fontSize: 18,
     color: "black",
   },
-  recipieDefaultText: {
+  recipeDefaultText: {
     flex: 1,
     fontSize: 14,
     color: "blue",

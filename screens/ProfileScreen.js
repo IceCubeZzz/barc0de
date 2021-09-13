@@ -86,10 +86,10 @@ const ProfileScreen = ({ route, navigation }) => {
   }, [foodDescription]);
 
   const addServing = () => {
-    navigation.navigate("AddRecipie", {
+    navigation.navigate("Addrecipe", {
       user: user,
-      newRecipie: false,
-      recipieAddition: {
+      newrecipe: false,
+      recipeAddition: {
         ingredient: foodDescription,
         servingAmount: servings,
         calories: calorieData,
