@@ -60,7 +60,7 @@ const ProfileScreen = ({ route, navigation }) => {
 };
 */
 
-const ProfileScreen = ({ route, navigation }) => {
+const ScannerScreen = ({ route, navigation }) => {
   const { user, previousScreen } = route.params;
 
   const [startCamera, setStartCamera] = React.useState(false);
@@ -272,7 +272,7 @@ const ProfileScreen = ({ route, navigation }) => {
   );
 };
 
-export default ProfileScreen;
+export default ScannerScreen;
 
 const styles = StyleSheet.create({
   container: {
