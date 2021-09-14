@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,40 +11,38 @@ import {
 } from "react-native";
 
 const AddRecipeScreen = ({ route, navigation }) => {
-  const { user, newRecipe, recipeAddition } = route.params;
+  const { user, newRecipe, ingredients } = route.params;
 
-  const [ingredients, setIngredients] = React.useState(
+  /*const [ingredients, setIngredients] = React.useState(
     newRecipe ? [] : [recipeAddition].concat(ingredients)
-  );
-
-  if (
+  );*/
+  /*if (
     recipeAddition &&
     Object.keys(recipeAddition).length > 0 &&
     (ingredients.length == 0 ||
-      (ingredients.length > 0 &&
-        ingredients[ingredients.length - 1]["ingredient"] !==
-          recipeAddition["ingredient"]))
+      (ingredients.length > 0 && newIngredientNum !== ingredientNum))
   ) {
     setIngredients([recipeAddition].concat(ingredients));
-  }
-  console.log(ingredients);
+  }*/
 
-  var ingredientComponentsArr = [];
-  for (let i = 0; i < ingredients.length; i++) {
-    ingredientComponentsArr.push(
-      <View style={styles.recipeContainer} key={i}>
-        <Text style={styles.recipeDefaultText}>
-          {ingredients[i]["ingredient"]}
-        </Text>
-        <Text style={styles.recipeDefaultText}>
-          {ingredients[i]["servingAmount"]}
-        </Text>
-        <Text style={styles.recipeDefaultText}>
-          {ingredients[i]["calories"] * ingredients[i]["servingAmount"] +
-            " Kcals"}
-        </Text>
-      </View>
-    );
+  if (ingredients) {
+    var ingredientComponentsArr = [];
+    for (let i = 0; i < ingredients.length; i++) {
+      ingredientComponentsArr.push(
+        <View style={styles.recipeContainer} key={i}>
+          <Text style={styles.recipeDefaultText}>
+            {ingredients[i]["ingredient"]}
+          </Text>
+          <Text style={styles.recipeDefaultText}>
+            {ingredients[i]["servingAmount"]}
+          </Text>
+          <Text style={styles.recipeDefaultText}>
+            {ingredients[i]["calories"] * ingredients[i]["servingAmount"] +
+              " Kcals"}
+          </Text>
+        </View>
+      );
+    }
   }
 
   return (
@@ -63,6 +61,7 @@ const AddRecipeScreen = ({ route, navigation }) => {
           navigation.navigate("Scanner", {
             user: user,
             previousScreen: "AddRecipe",
+            ingredients: ingredients ? ingredients : [],
           });
         }}
       />
