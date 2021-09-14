@@ -16,6 +16,16 @@ import react from "react";
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBqXmcm9QHT4l0VcDZJTT-LIglLlDYDnc0",
+  authDomain: "barc0de.firebaseapp.com",
+  projectId: "barc0de",
+  storageBucket: "barc0de.appspot.com",
+  messagingSenderId: "359999706099",
+  appId: "1:359999706099:web:c9c9c4faf0843c95a77886",
+  measurementId: "G-RPNEDJM94T"
+};
+firebase.initializeApp(firebaseConfig);
 /*
 export default class ProfileScreen extends PureComponent {  constructor(props) {
   super(props);}
@@ -64,6 +74,8 @@ const ProfileScreen = ({ route, navigation }) => {
   const [servings, setServings] = React.useState(0);
   const [ID, setID] = React.useState(0);
 
+  
+
   useEffect(() => {
     if (foodDescription) {
       Alert.alert(
@@ -85,6 +97,7 @@ const ProfileScreen = ({ route, navigation }) => {
           },
         ]
       );
+      
     }
   }, [foodDescription]);
 
@@ -105,22 +118,14 @@ const ProfileScreen = ({ route, navigation }) => {
         // todo: setup log
       });
     }
-    const firebaseConfig = {
-      apiKey: "AIzaSyBqXmcm9QHT4l0VcDZJTT-LIglLlDYDnc0",
-      authDomain: "barc0de.firebaseapp.com",
-      projectId: "barc0de",
-      storageBucket: "barc0de.appspot.com",
-      messagingSenderId: "359999706099",
-      appId: "1:359999706099:web:c9c9c4faf0843c95a77886",
-      measurementId: "G-RPNEDJM94T"
-    };
+    
     try{
-        firebase.initializeApp(firebaseConfig);
+        
         const dbh = firebase.firestore();
-        dbh.collection('food').doc(user.name).set({
-        ingredient: foodDescription,
-        servingAmount: servings,
-        calories: servings*calorieData,
+        dbh.collection('food').doc(user.name).update({
+          ingredient: foodDescription,
+          servingAmount: servings,
+          calories: servings*calorieData,
     });
   }catch(error) {
       Alert.alert('there is something wrong', error.message);
