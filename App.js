@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 // Screens
 import LoginScreen from "./screens/LoginScreen";
-import ProfileScreen from "./screens/ProfileScreen";
+import ScannerScreen from "./screens/ScannerScreen";
 import ActionSelectionScreen from "./screens/ActionSelectionScreen";
 import ViewRecipeScreen from "./screens/ViewRecipeScreen";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
@@ -22,7 +22,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Scanner" component={ScannerScreen} />
         <Stack.Screen
           name="ActionSelection"
           component={ActionSelectionScreen}

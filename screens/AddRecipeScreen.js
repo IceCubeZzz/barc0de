@@ -59,7 +59,7 @@ const AddRecipeScreen = ({ route, navigation }) => {
         title="Add new ingredient"
         onPress={() => {
           // navigate to barcode scanner screen
-          navigation.navigate("Profile", {
+          navigation.navigate("Scanner", {
             user: user,
             previousScreen: "AddRecipe",
           });

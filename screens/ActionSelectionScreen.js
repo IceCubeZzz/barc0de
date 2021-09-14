@@ -29,7 +29,7 @@ const ActionSelectionScreen = () => {
         style={styles.defaultButton}
         title="View Recipes"
         onPress={() => {
-          // navigate to add recipe screen
+          // navigate to view recipe screen
           navigation.navigate("ViewRecipe", {
             user,
           });
