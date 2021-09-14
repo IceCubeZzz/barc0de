@@ -249,23 +249,27 @@ const ScannerScreen = ({ route, navigation }) => {
       </View>
 
       <View style={styles.row}>
-        <Button
-          style={styles.defaultButton}
-          title=" - "
-          onPress={() => {
-            setServings(servings === 0 ? servings : servings - 1);
-          }}
-        />
+        <View style={styles.defaultButton}>
+          <Button
+            style={styles.defaultButton}
+            title=" - "
+            onPress={() => {
+              setServings(servings === 0 ? servings : servings - 1);
+            }}
+          />
+        </View>
 
-        <Text style={styles.defaultText}> {"Servings: " + servings} </Text>
+        <Text style={styles.servingsText}> {"Servings: " + servings} </Text>
 
-        <Button
-          styles={styles.defaultButton}
-          title=" + "
-          onPress={() => {
-            setServings(servings + 1);
-          }}
-        />
+        <View style={styles.defaultButton}>
+          <Button
+            styles={styles.defaultButton}
+            title=" + "
+            onPress={() => {
+              setServings(servings + 1);
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -282,21 +286,17 @@ const styles = StyleSheet.create({
   },
   row: {
     backgroundColor: "#fff",
-    alignSelf: "stretch",
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
   defaultButton: {
-    flex: 3,
-    alignSelf: "stretch",
-    width: "25%",
+    flex: 2,
   },
-  defaultText: {
-    fontSize: 26,
+  servingsText: {
+    fontSize: 20,
     color: "blue",
-    alignSelf: "center",
   },
   defaultWhiteText: {
     fontSize: 22,
