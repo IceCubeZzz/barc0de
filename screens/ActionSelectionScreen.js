@@ -10,7 +10,9 @@ import {
   Button,
 } from "react-native";
 
-const ActionSelectionScreen = () => {
+const ActionSelectionScreen = ({ route, navigation }) => {
+  const { user } = route.params;
+
   return (
     <View>
       <Button

@@ -40,7 +40,8 @@ const AddRecipeScreen = ({ route, navigation }) => {
           {ingredients[i]["servingAmount"]}
         </Text>
         <Text style={styles.recipeDefaultText}>
-          {ingredients[i]["calories"] + " Kcals"}
+          {ingredients[i]["calories"] * ingredients[i]["servingAmount"] +
+            " Kcals"}
         </Text>
       </View>
     );
