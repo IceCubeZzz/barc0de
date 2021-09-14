@@ -13,6 +13,19 @@ import { StatusBar } from "expo-status-bar";
 import CameraPreview from "./CameraPreview";
 import { BUILDER_KEYS } from "@babel/types";
 import react from "react";
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBqXmcm9QHT4l0VcDZJTT-LIglLlDYDnc0",
+  authDomain: "barc0de.firebaseapp.com",
+  projectId: "barc0de",
+  storageBucket: "barc0de.appspot.com",
+  messagingSenderId: "359999706099",
+  appId: "1:359999706099:web:c9c9c4faf0843c95a77886",
+  measurementId: "G-RPNEDJM94T"
+};
+firebase.initializeApp(firebaseConfig);
 /*
 export default class ProfileScreen extends PureComponent {  constructor(props) {
   super(props);}
@@ -61,6 +74,8 @@ const ScannerScreen = ({ route, navigation }) => {
   const [servings, setServings] = React.useState(0);
   const [ID, setID] = React.useState(0);
 
+  
+
   useEffect(() => {
     if (foodDescription) {
       Alert.alert(
@@ -82,6 +97,7 @@ const ScannerScreen = ({ route, navigation }) => {
           },
         ]
       );
+      
     }
   }, [foodDescription]);
 
@@ -101,6 +117,18 @@ const ScannerScreen = ({ route, navigation }) => {
         user: user,
         // todo: setup log
       });
+    }
+    
+    try{
+        
+        const dbh = firebase.firestore();
+        dbh.collection('food').doc(user.name).update({
+          ingredient: foodDescription,
+          servingAmount: servings,
+          calories: servings*calorieData,
+    });
+  }catch(error) {
+      Alert.alert('there is something wrong', error.message);
     }
   };
 
