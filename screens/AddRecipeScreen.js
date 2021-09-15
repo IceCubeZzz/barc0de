@@ -72,7 +72,6 @@ const AddRecipeScreen = ({ route, navigation }) => {
           styles={styles.defaultButton}
           title="Save recipe"
           onPress={() => {
-            // TODO: SAVE RECIPE IN FIREBASE HERE!!!!
             navigation.navigate("ActionSelection", {
               user: user,
             });

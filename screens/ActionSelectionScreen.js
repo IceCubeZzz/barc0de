@@ -29,18 +29,6 @@ const ActionSelectionScreen = ({ route, navigation }) => {
           }}
         />
       </View>
-      <View style={styles.defaultButton}>
-        <Button
-          style={styles.defaultButton}
-          title="View Recipes"
-          onPress={() => {
-            // navigate to view recipe screen
-            navigation.navigate("ViewRecipe", {
-              user,
-            });
-          }}
-        />
-      </View>
     </View>
   );
 };
