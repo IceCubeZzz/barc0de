@@ -120,12 +120,11 @@ const ScannerScreen = ({ route, navigation }) => {
       const dbh = firebase.firestore();
       dbh
         .collection("food")
-        .doc(user.name)
-        .update({
+        .add({
           ingredient: foodDescription,
           servingAmount: servings,
           calories: servings * calorieData,
-        });
+        })
     } catch (error) {
       Alert.alert("there is something wrong", error.message);
     }
