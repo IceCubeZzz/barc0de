@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
   },
   servingsText: {
     fontSize: 20,
-    color: "blue",
+    color: "#ADD8E6",
   },
   defaultWhiteText: {
     fontSize: 22,
