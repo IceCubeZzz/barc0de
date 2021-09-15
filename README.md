@@ -6,3 +6,5 @@ barc0de is an ios/android application with google authentication via OAuth via [
 > yarn installs all necessary packages/libraries
 
 > expo start launches the application, consider the metro bundler via expo [the finished environment](https://docs.expo.dev/guides/how-expo-works/) -- How expo works
+
+./RPReplay_Final1631672885.mp4
