@@ -94,7 +94,7 @@ const ScannerScreen = ({ route, navigation }) => {
         ingredients: ingredients.concat({
           ingredient: foodDescription,
           servingAmount: servings,
-          calories: calorieData,
+          calories: calorieData * servings,
         }),
       });
     } else if (previousScreen === "AddLog") {
@@ -263,14 +263,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
   },
   defaultButton: {
     flex: 2,
   },
   servingsText: {
     fontSize: 20,
-    color: "#ADD8E6",
+    //color: "#ADD8E6",
+    color: "black",
   },
   defaultWhiteText: {
     fontSize: 22,
