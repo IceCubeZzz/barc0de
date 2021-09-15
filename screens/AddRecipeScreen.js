@@ -9,6 +9,8 @@ import {
   FlatList,
   Button,
 } from "react-native";
+import * as firebase from "firebase";
+import "firebase/firestore";
 
 const AddRecipeScreen = ({ route, navigation }) => {
   const { user, newRecipe, ingredients } = route.params;
@@ -72,7 +74,42 @@ const AddRecipeScreen = ({ route, navigation }) => {
           styles={styles.defaultButton}
           title="Save recipe"
           onPress={() => {
-            // TODO: SAVE RECIPE IN FIREBASE HERE!!!!
+            try {
+              const dbh = firebase.firestore();
+              dbh
+                .collection("users")
+                .doc(user.id)
+                .get()
+                .then(function (doc) {
+                  if (doc.exists && doc.data().ingredients) {
+                    var existingRecipeAmount = Object.keys(
+                      doc.data().ingredients
+                    ).length;
+                    var newIngredients = doc.data().ingredients;
+                    newIngredients[existingRecipeAmount] = ingredients;
+                    // update existing doc
+                    dbh.collection("users").doc(user.id).set(
+                      {
+                        ingredients: newIngredients,
+                      },
+                      { merge: true }
+                    );
+                  } else {
+                    // create new doc
+                    dbh
+                      .collection("users")
+                      .doc(user.id)
+                      .set(
+                        {
+                          ingredients: { 0: ingredients },
+                        },
+                        { merge: true }
+                      );
+                  }
+                });
+            } catch (error) {
+              Alert.alert("there is something wrong", error.message);
+            }
             navigation.navigate("ActionSelection", {
               user: user,
             });

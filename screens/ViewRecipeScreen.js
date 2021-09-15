@@ -7,65 +7,86 @@ import {
   Alert,
   FlatList,
   Button,
+  ScrollView,
 } from "react-native";
+import * as firebase from "firebase";
+import "firebase/firestore";
 
 const ViewRecipeScreen = ({ route, navigation }) => {
   const { user } = route.params;
 
-  //todo: retrieve recipes from firebase and store in 'x'
-  //format should be:
-  /*x: {
-      {
-        ingredients: [something, somethingElse],
-        servings: [1, 2],
-        calories: [100, 200]
-      }
-      {
-        ingredients: [something],
-        servings: [1],
-        calories: [100]
-      }
-    }*/
-  var recipeData; //= Object.keys(x).map(key => ({[key]: x[key]}));;
+  const [recipeComponents, setRecipeComponents] = React.useState(null);
 
+  var recipeData = [];
   var recipes = [];
-  // add each recipe to screen
-  for (let i = 0; i < recipeData.length; i++) {
-    recipes.push(
-      recipe(
-        recipeData[i]["ingredients"],
-        recipeData[i]["servingAmount"],
-        recipeData[i]["calories"]
-      )
-    );
+  try {
+    const dbh = firebase.firestore();
+    dbh
+      .collection("users")
+      .doc(user.id)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          recipeData = doc.data().ingredients;
+          // add each recipe to screen
+          for (let i = 0; i < Object.keys(recipeData).length; i++) {
+            recipes.push(recipe(recipeData[i], i));
+          }
+
+          if (recipeComponents == null) {
+            setRecipeComponents(recipes);
+          }
+        } else {
+          // do nothing
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+  } catch (error) {
+    Alert.alert("there is something wrong", error.message);
   }
 
   return (
-    <View
+    <ScrollView
       style={{
         flexDirection: "column",
       }}
     >
-      <View style={styles.recipesList}>{recipes}</View>
-    </View>
+      <View style={styles.recipesList}>{recipeComponents}</View>
+    </ScrollView>
   );
 };
 
-const recipe = ({ ingredients, servings, totalCalories }) => {
-  recipeRow = [];
+const recipe = (ingredients, num) => {
+  var recipeRow = [];
 
-  for (let i = 0; i < ingredients.length; i++) {
+  for (var i = 0; i < ingredients.length; i++) {
     recipeRow.push(
-      <View style={styles.recipeContainer}>
-        <Text style={styles.recipeDefaultText}>{ingredients[i]}</Text>
-        <Text style={styles.recipeDefaultText}>{servings[i]}</Text>
-        <Text style={styles.recipeDefaultText}>{totalCalories[i]}</Text>
+      <View key={i} style={styles.recipeContainer}>
+        <Text style={styles.recipeIngredientText}>
+          {ingredients[i]["ingredient"]}
+        </Text>
+        <Text style={styles.recipeDefaultText}>
+          {ingredients[i]["servingAmount"]}
+        </Text>
+        <Text style={styles.recipeDefaultText}>
+          {ingredients[i]["calories"]}
+        </Text>
       </View>
     );
   }
+
   return (
-    <View key={i} style={styles.recipeList}>
+    <View style={styles.recipeList}>
+      <Text style={styles.recipeNumberText}>{"Recipe Number: " + num}</Text>
+      <View style={styles.recipeContainer}>
+        <Text style={styles.recipeHeaderText}>Ingredients:</Text>
+        <Text style={styles.recipeHeaderText}>Servings:</Text>
+        <Text style={styles.recipeHeaderText}>Calories:</Text>
+      </View>
       {recipeRow}
+      <View style={styles.recipeSeperator}></View>
     </View>
   );
 };
@@ -74,7 +95,8 @@ export default ViewRecipeScreen;
 
 const styles = StyleSheet.create({
   recipesList: {
-    flex: 1,
+    width: "100%",
+    height: "100%",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "stretch",
@@ -85,17 +107,31 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "stretch",
   },
+  recipeNumberText: {
+    flex: 0.2,
+    fontSize: 30,
+    color: "black",
+  },
+  recipeSeperator: {
+    backgroundColor: "#000",
+    height: 10,
+    flex: 3,
+  },
   recipeContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+  },
+  recipeIngredientText: {
+    flex: 2,
+    fontSize: 16,
+    color: "blue",
   },
   recipeDefaultText: {
     flex: 1,
-    fontSize: 20,
+    fontSize: 16,
     color: "blue",
   },
   defaultButton: {
-    flex: 3,
     alignSelf: "stretch",
     width: "100%",
   },

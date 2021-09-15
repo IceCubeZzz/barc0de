@@ -8,8 +8,8 @@ const Stack = createStackNavigator();
 // Screens
 import LoginScreen from "./screens/LoginScreen";
 import ScannerScreen from "./screens/ScannerScreen";
-import ActionSelectionScreen from "./screens/ActionSelectionScreen";
 import ViewRecipeScreen from "./screens/ViewRecipeScreen";
+import ActionSelectionScreen from "./screens/ActionSelectionScreen";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
 import { SafeAreaView } from "react-native";
 import CameraPreview from "./screens/CameraPreview";

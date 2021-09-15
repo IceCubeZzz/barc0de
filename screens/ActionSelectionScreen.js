@@ -9,6 +9,17 @@ import {
   FlatList,
   Button,
 } from "react-native";
+import * as firebase from "firebase";
+const firebaseConfig = {
+  apiKey: "AIzaSyCwxSYqxLs-8jyEDN4-8Kp30lWMOIGrMos",
+  authDomain: "barc0de-909b1.firebaseapp.com",
+  projectId: "barc0de-909b1",
+  storageBucket: "barc0de-909b1.appspot.com",
+  messagingSenderId: "831456892862",
+  appId: "1:831456892862:web:58b724a71b245c835c8bef",
+  measurementId: "G-G9H28Y9WTH",
+};
+firebase.initializeApp(firebaseConfig);
 
 const ActionSelectionScreen = ({ route, navigation }) => {
   const { user } = route.params;
