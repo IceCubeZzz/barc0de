@@ -53,28 +53,32 @@ const AddRecipeScreen = ({ route, navigation }) => {
         <Text style={styles.recipeHeaderText}>Calories:</Text>
       </View>
       {ingredientComponentsArr}
-      <Button
-        styles={styles.defaultButton}
-        title="Add new ingredient"
-        onPress={() => {
-          // navigate to barcode scanner screen
-          navigation.navigate("Scanner", {
-            user: user,
-            previousScreen: "AddRecipe",
-            ingredients: ingredients ? ingredients : [],
-          });
-        }}
-      />
-      <Button
-        styles={styles.defaultButton}
-        title="Save recipe"
-        onPress={() => {
-          // TODO: SAVE RECIPE IN FIREBASE HERE!!!!
-          navigation.navigate("ActionSelection", {
-            user: user,
-          });
-        }}
-      />
+      <View style={styles.defaultButton}>
+        <Button
+          styles={styles.defaultButton}
+          title="Add new ingredient"
+          onPress={() => {
+            // navigate to barcode scanner screen
+            navigation.navigate("Scanner", {
+              user: user,
+              previousScreen: "AddRecipe",
+              ingredients: ingredients ? ingredients : [],
+            });
+          }}
+        />
+      </View>
+      <View style={styles.defaultButton}>
+        <Button
+          styles={styles.defaultButton}
+          title="Save recipe"
+          onPress={() => {
+            // TODO: SAVE RECIPE IN FIREBASE HERE!!!!
+            navigation.navigate("ActionSelection", {
+              user: user,
+            });
+          }}
+        />
+      </View>
     </ScrollView>
   );
 };
@@ -83,10 +87,11 @@ export default AddRecipeScreen;
 
 const styles = StyleSheet.create({
   recipeList: {
-    flex: 1,
+    width: "100%",
+    height: "100%",
     flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "stretch",
+    justifyContent: "center",
+    alignItems: "center",
   },
   recipeContainer: {
     flexDirection: "row",
@@ -104,8 +109,9 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   defaultButton: {
-    flex: 3,
-    alignSelf: "stretch",
-    width: "100%",
+    paddingTop: 5,
+    paddingBottom: 5,
+    alignSelf: "center",
+    width: "75%",
   },
 });

@@ -37,4 +37,12 @@ const LoginScreen = ({ navigation }) => {
 
 export default LoginScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    height: "100%",
+    width: "100%",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+});

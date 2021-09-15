@@ -14,29 +14,33 @@ const ActionSelectionScreen = ({ route, navigation }) => {
   const { user } = route.params;
 
   return (
-    <View>
-      <Button
-        style={styles.defaultButton}
-        title="Add New Recipe"
-        onPress={() => {
-          // navigate to add recipe screen
-          navigation.navigate("AddRecipe", {
-            user,
-            newRecipe: true,
-            recipeAddition: null,
-          });
-        }}
-      />
-      <Button
-        style={styles.defaultButton}
-        title="View Recipes"
-        onPress={() => {
-          // navigate to view recipe screen
-          navigation.navigate("ViewRecipe", {
-            user,
-          });
-        }}
-      />
+    <View style={styles.container}>
+      <View style={styles.defaultButton}>
+        <Button
+          style={styles.defaultButton}
+          title="Add New Recipe"
+          onPress={() => {
+            // navigate to add recipe screen
+            navigation.navigate("AddRecipe", {
+              user,
+              newRecipe: true,
+              recipeAddition: null,
+            });
+          }}
+        />
+      </View>
+      <View style={styles.defaultButton}>
+        <Button
+          style={styles.defaultButton}
+          title="View Recipes"
+          onPress={() => {
+            // navigate to view recipe screen
+            navigation.navigate("ViewRecipe", {
+              user,
+            });
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -44,9 +48,14 @@ const ActionSelectionScreen = ({ route, navigation }) => {
 export default ActionSelectionScreen;
 
 const styles = StyleSheet.create({
-  defaultButton: {
-    flex: 3,
-    alignSelf: "stretch",
+  container: {
+    height: "100%",
     width: "100%",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  defaultButton: {
+    width: "75%",
   },
 });
