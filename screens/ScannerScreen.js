@@ -13,19 +13,7 @@ import { StatusBar } from "expo-status-bar";
 import CameraPreview from "./CameraPreview";
 import { BUILDER_KEYS } from "@babel/types";
 import react from "react";
-import * as firebase from "firebase";
-import "firebase/firestore";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBqXmcm9QHT4l0VcDZJTT-LIglLlDYDnc0",
-  authDomain: "barc0de.firebaseapp.com",
-  projectId: "barc0de",
-  storageBucket: "barc0de.appspot.com",
-  messagingSenderId: "359999706099",
-  appId: "1:359999706099:web:c9c9c4faf0843c95a77886",
-  measurementId: "G-RPNEDJM94T",
-};
-firebase.initializeApp(firebaseConfig);
 /*
 export default class ProfileScreen extends PureComponent {  constructor(props) {
   super(props);}
@@ -106,7 +94,7 @@ const ScannerScreen = ({ route, navigation }) => {
         ingredients: ingredients.concat({
           ingredient: foodDescription,
           servingAmount: servings,
-          calories: calorieData,
+          calories: calorieData * servings,
         }),
       });
     } else if (previousScreen === "AddLog") {
@@ -114,19 +102,6 @@ const ScannerScreen = ({ route, navigation }) => {
         user: user,
         // todo: setup log
       });
-    }
-
-    try {
-      const dbh = firebase.firestore();
-      dbh
-        .collection("food")
-        .add({
-          ingredient: foodDescription,
-          servingAmount: servings,
-          calories: servings * calorieData,
-        })
-    } catch (error) {
-      Alert.alert("there is something wrong", error.message);
     }
   };
 
@@ -288,14 +263,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
   },
   defaultButton: {
     flex: 2,
   },
   servingsText: {
     fontSize: 20,
-    color: "blue",
+    //color: "#ADD8E6",
+    color: "black",
   },
   defaultWhiteText: {
     fontSize: 22,
